@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- 浏览器标签上显示的网站标题 -->
+    <title>微观云导航</title>
+    <!-- 网站介绍 -->
+    <meta name="description" content="微观云导航为用户提供旗下所有网站，避免用户丢失或不记得微观云所搭建的网站!">
+    <!-- 网站关键字 -->
+    <meta name="keywords" content="微观云,导航,微观云导航,网址导航">
+    <!-- 浏览器标签上显示的图标 -->
+    <link rel="icon" type="image/ico" href="./static/favicon.ico">
+    <!-- 样式文件 -->
+    <link rel="stylesheet" href="./static/bootstrap.min.css">
+    <link rel="stylesheet" href="./static/all.min.css">
+    <link rel="stylesheet" href="./static/style.css?v=1.2.0">
+    <link rel="stylesheet" href="./static/APlayer-1.10.1/dist/APlayer.min.css">
+
+    <!-- 自定义设置 -->
+    <style>
+        body::before {
+            /* 背景图片URL 可使用随机图片API */
+            background-image: url("");*/
+        }
+
+        .photo-bg {
+            /* 卡片左侧图片 */
+            background-image: url("bgimg.php");
+            /*background-image: url("https://www.loliapi.com/acg/");*/
+        }
+    </style>
+    <script>
+        // 音乐设置
+        let meting_music_api = "https://meting.meuicat.com/";// meting api
+        let music_server = "netease"; // 音乐服务：网易云 netease 参见 meting api支持的服务
+        let music_type = "playlist"; // 歌曲类型：歌单playlist 单首歌曲 song  专辑 album
+        let music_id = "431519935"; // 歌单ID或歌曲ID或者专辑ID 20173709 29732992
+        let music_order = "random"; // 音频循环顺序, 顺序播放： 'list', 随机播放：'random'
+        let music_mini = false; // mini模式 吸底模式开启后此选项实效 true / false
+        let music_fixed = false; // 吸底模式
+        let music_volume = 0.7; // 默认音量
+        let music_autoplay = false; // 自动播放
+        let music_loop = "all"; // 音频循环播放, 可选值: 'all', 'one', 'none' ，分别为全部循环，单曲循环，不循环
+        // TODO 一言设置
+    </script>
+    <!-- end 自定义设置 -->
+</head>
+
+<body>
+    <div class="kz-video">
+        <!-- end mp4壁纸：https://bizhi.cheetahfun.com -->
+        <video src="bgmp4.php" autoplay="autoplay" loop muted playsinline="" webkit-playsinline=""></video>
+        
+    </div>
+    <div id="main" class="container">
+        <div class="row my-card justify-content-center">
+            <div class="col-lg-4 photo-bg"></div>
+            <div class="col-lg-8 card">
+                <!-- 大标题 -->
+                <h1>微观云导航</h1>
+                <!-- 标题下的一段话 -->
+                <p>
+                    注意看这里 <span style="font-style: italic;">!!</span><br>请 Ctrl + D 收藏本站，避免丢失找不到我们！<br>永久网址：www.wgynav.com
+                </p>
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- 导航按钮组 -->
+                        <!--<button data-href="https://www.wgybook.com" data-window="newtab"
+                            data-anim="4" data-area-w="80%" data-area-h="90%" data-shade="false"
+                            class="kz-nav-btn btn btn-danger col-lg-6">新手教程（主站）</button>
+                        -->
+                        <script>
+<!--
+document.write(unescape("%3Cbutton%20data-href%3D%22https%3A//www.wgybook.com%22%20data-window%3D%22newtab%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20data-anim%3D%224%22%20data-area-w%3D%2280%25%22%20data-area-h%3D%2290%25%22%20data-shade%3D%22false%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20class%3D%22kz-nav-btn%20btn%20btn-danger%20col-lg-6%22%3E%u65B0%u624B%u6559%u7A0B%uFF08%u4E3B%u7AD9%uFF09%3C/button%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cbutton%20data-href%3D%22https%3A//www.wgybook.net%22%20data-window%3D%22newtab%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20data-anim%3D%224%22%20data-area-w%3D%2280%25%22%20data-area-h%3D%2290%25%22%20data-shade%3D%22false%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20class%3D%22kz-nav-btn%20btn%20btn-primary%20col-lg-6%22%3E%u65B0%u624B%u6559%u7A0B%uFF08%u5907%u7AD9%uFF09%3C/button%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cbutton%20data-href%3D%22https%3A//user2.wgy5.xyz/user%22%20data-window%3D%22newtab%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20data-anim%3D%224%22%20data-area-w%3D%2280%25%22%20data-area-h%3D%2290%25%22%20data-shade%3D%22false%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20class%3D%22kz-nav-btn%20btn%20btn-indigo%20col-lg-6%22%3E%u767B%u5F55%u7F51%u7AD9%uFF08%u4E3B%u7AD9%uFF09%3C/button%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cbutton%20data-href%3D%22https%3A//user3.wgy5.xyz/user%22%20data-window%3D%22newtab%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20data-anim%3D%224%22%20data-area-w%3D%2280%25%22%20data-area-h%3D%2290%25%22%20data-shade%3D%22false%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20class%3D%22kz-nav-btn%20btn%20btn-green%20col-lg-6%22%3E%u767B%u5F55%u7F51%u7AD9%uFF08%u5907%u7AD9%uFF09%3C/button%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cbutton%20data-href%3D%22https%3A//wgyid.com/share/wgy%22%20data-window%3D%22newtab%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20data-anim%3D%224%22%20data-area-w%3D%2280%25%22%20data-area-h%3D%2290%25%22%20data-shade%3D%22false%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20class%3D%22kz-nav-btn%20btn%20btn-cyan%20col-lg-12%22%3EAppleID%u83B7%u53D6%3C/button%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cbutton%20data-href%3D%22https%3A//wgyai.com%22%20data-window%3D%22newtab%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20data-anim%3D%224%22%20data-area-w%3D%2280%25%22%20data-area-h%3D%2290%25%22%20data-shade%3D%22false%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20class%3D%22kz-nav-btn%20btn%20btn-gray-dark%20col-lg-6%22%3E%u5FAE%u89C2%u4E91Ai-ChatGPT%3C/button%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cbutton%20data-href%3D%22https%3A//www.monmiao.com%22%20data-window%3D%22newtab%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20data-anim%3D%224%22%20data-area-w%3D%2280%25%22%20data-area-h%3D%2290%25%22%20data-shade%3D%22false%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20class%3D%22kz-nav-btn%20btn%20btn-teal%20col-lg-6%22%3E%u840C%u55B5%u5F71%u89C6%3C/button%3E"));
+//-->
+</script>
+                        <!-- end 导航按钮组 -->
+                    </div>
+                </div>
+                <!-- aplayer inner -->
+                <div id="aplayer-inner" class="aplayer"></div>
+
+                <!--<footer>
+                    <p>Copyright 2023 by WGYNAV.COM</p>
+                </footer>
+                -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- aplayer -->
+    <div id="aplayer-fixed" class="aplayer"></div>
+    <script src="./static/jquery.min.js"></script>
+    <script src="./static/APlayer-1.10.1/dist/APlayer.min.js"></script>
+    <script src="./static/Meting.min.js"></script>
+    <!-- end_aplayer -->
+    <script src="./static/popper.min.js"></script>
+    <script defer src="./static/bootstrap.min.js"></script>
+    <script src="./static/layer-v3.5.1/layer/layer.js"></script>
+
+    <script src="./static/main.js"></script>
+
+<style>
+        body {
+            /* height: 200%; */
+        }
+
+        .yuntucao-link {
+            position: fixed;
+            bottom: 40px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            background-image: url(https://chat.remfk.com/upload/images/1/1704640460.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	box-shadow: 0 0 10px rgba(12, 12, 12, 0.3);
+	border-radius: 100%;
+	border: 1px solid #f00
+        }
+
+        .logo-wrap:hover {
+        }
+
+        .logo-wrap:hover .logo {
+            background-image: url(https://chat.remfk.com/upload/images/1/1704640461.png);
+	box-shadow: 0 0 10px rgb(255 0 0 / 60%);
+	border-radius: 100%;
+        }
+
+        .yuntucao-link:hover .tips-wrap {
+            display: block;
+            background: #418dff;
+        }
+
+        .tips-wrap {
+            position: relative;
+            display: none;
+        }
+
+        .tips {
+            width: 86px;
+            height: 32px;
+            background: #4e4e4e;
+            border-radius: 4px;
+            position: absolute;
+            left: -98px;
+            top: -44px;
+
+            color:#fff;
+            text-align: center;
+            line-height: 32px;
+            font-size: 14px;
+        }
+        
+        .tips:after {
+            content: " ";
+            display: block;
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid #4e4e4e;
+            position: absolute;
+            right: -6px;
+            top: 10px;
+        }
+</style>
+
+
+<div class="yuntucao-link">
+        <a href="https://chat.remfk.com/index/index/home?visiter_id=&visiter_name=&avatar=&groupid=0&business_id=1" target="_blank">
+            <div class="logo-wrap">
+                <div class="logo"></div>
+            </div>
+        </a>
+        <div class="tips-wrap fade-in">
+            <div class="tips"><span>联系我们</span></div>
+        </div>
+</div>
+
+</html>
