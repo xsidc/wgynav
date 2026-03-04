@@ -822,8 +822,8 @@
                 .catch(function() {
                     // Fallback: use embedded site list
                     var fallback = [
-                        '登录微观云 线路①|https://d5x.wgy-e0k1c0.shop/user',
-                        '登录微观云 线路②|https://www.wgy-t8gs.shop/user',
+                        '登录微观云 |https://d5x.wgy-e0k1c0.shop/user',
+                        '登录微观云 |https://www.wgy-t8gs.shop/user',
                     ].join('\n');
                     sites = parseSites(fallback);
                     sites.forEach(function(s) { s.status = 'testing'; });
