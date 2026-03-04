@@ -214,7 +214,8 @@
                 .catch(function() {
                     // Fallback: use embedded site list
                     var fallback = [
-                        '未获取到网站列表请刷新 |#',
+                        '登录微观云 |https://www.wgy-t8gs.shop/user',
+                        '登录微观云 |https://d5x.wgy-e0k1c0.shop/user',
                     ].join('\n');
                     sites = parseSites(fallback);
                     sites.forEach(function(s) { s.status = 'testing'; });
