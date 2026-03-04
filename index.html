@@ -808,7 +808,7 @@
             render();
 
             // Try to fetch sites.txt from same directory
-            fetch('sites.txt')
+            fetch('https://api.wgynav.com/sites.txt')
                 .then(function(res) {
                     if (!res.ok) throw new Error('Failed');
                     return res.text();
