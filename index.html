@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 新增的 SEO 元标签 -->
+    <meta name="description" content="微观云导航为用户提供旗下所有网站，避免用户丢失或不记得微观云所搭建的网站!">
+    <meta name="keywords" content="微观云,导航,微观云导航,网址导航">
+    
     <!-- 禁止浏览器缓存，强制每次刷新都重新请求 -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>微观云导航</title>
-    <meta name="description" content="微观云导航为用户提供旗下所有网站，避免用户丢失或不记得微观云所搭建的网站!">
-    <meta name="keywords" content="微观云,导航,微观云导航,网址导航">
+    
+    <title>微观云导航 · 清新卡片版</title>
     <style>
         * {
             margin: 0;
@@ -386,7 +390,7 @@
         <!-- 顶部视频横幅 (高度 300px) -->
         <div class="banner-area">
             <video class="banner-video" autoplay loop muted playsinline>
-                <source src="https://api.wgynav.com/bgmp4.php" type="video/mp4">
+                <source src="https://api.wgynav.com/bgmp4.php" type="video/mp4" id="bannerVideoSource">
             </video>
             <div class="banner-overlay">
                 <div class="banner-title">微观云导航</div>
@@ -413,14 +417,14 @@
 
             <!-- 两个外链卡片 -->
             <div class="speed-list" id="speedList">
-                <a href="https://e5t232.wgy-t8gs.shop/user" target="_blank" rel="noopener" class="speed-item" data-url="https://e5t232.wgy-t8gs.shop/user" data-id="1">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="speed-item" data-url="" data-id="1">
                     <div class="left">
                         <span class="lightning-icon">⚡</span>
                         登录微观云
                     </div>
                     <div class="right" id="ping1">-- ms</div>
                 </a>
-                <a href="https://8r.wgy-e0k1c5.bid/user" target="_blank" rel="noopener" class="speed-item" data-url="https://8r.wgy-e0k1c5.bid/user" data-id="2">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="speed-item" data-url="" data-id="2">
                     <div class="left">
                         <span class="lightning-icon">⚡</span>
                         登录微观云
@@ -437,7 +441,7 @@
 
             <div class="sub-title">旗下网站</div>
             <div class="website-grid">
-                <a href="https://www.wgyfaq.com" target="_blank" rel="noopener" class="website-card">
+                <a href="https://www.wgyfaq.com/t/install" target="_blank" rel="noopener" class="website-card">
                     <img src="https://img.qqx.me/file/1783534235683_favicon-da7xvuzl.png" alt="知识库图标" class="website-icon-img">
                     知识库
                 </a>
@@ -445,7 +449,7 @@
                     <img src="https://img.qqx.me/file/1783535041997_6TOm7.png" alt="AppleID购买图标" class="website-icon-img">
                     AppleID购买
                 </a>
-                <a href="https://www.monmiao.com"  target="_blank" rel="noopener"class="website-card">
+                <a href="https://www.monmiao.com/" target="_blank" rel="noopener" class="website-card">
                     <img src="https://img.qqx.me/file/1783535038866_6TGsS.png" alt="萌喵影视图标" class="website-icon-img">
                     萌喵影视
                 </a>
@@ -457,7 +461,86 @@
 
     <script>
         (function() {
-            // 收藏功能相关
+            // ==========================================
+            // 1. 外链文件配置
+            // ==========================================
+            const LINKS_FILE_URL = 'https://raw.githubusercontent.com/xsidc/wgynav/main/links.txt';
+
+            // ==========================================
+            // 2. 强制刷新与清缓存逻辑
+            // ==========================================
+            const bgUrl = 'https://www.loliapi.com/acg/pc/?_t=' + Date.now();
+            document.body.style.backgroundImage = `url('${bgUrl}')`;
+
+            const videoSource = document.getElementById('bannerVideoSource');
+            if (videoSource) {
+                videoSource.src = 'https://api.wgynav.com/bgmp4.php?_t=' + Date.now();
+                const videoEl = videoSource.parentElement;
+                if (videoEl) {
+                    videoEl.load();
+                }
+            }
+
+            document.querySelectorAll('.website-icon-img').forEach(img => {
+                const originalSrc = img.src;
+                if (!originalSrc.includes('_t=')) {
+                    img.src = originalSrc + (originalSrc.includes('?') ? '&' : '?') + '_t=' + Date.now();
+                }
+            });
+
+            // ==========================================
+            // 3. 动态读取外链文件获取登录链接
+            // ==========================================
+            async function loadExternalLinks() {
+                try {
+                    const response = await fetch(LINKS_FILE_URL + '?_t=' + Date.now());
+                    if (!response.ok) throw new Error('网络请求失败');
+                    const text = await response.text();
+                    
+                    const links = text.split('\n')
+                        .map(line => line.trim())
+                        .filter(line => line && !line.startsWith('#'));
+
+                    if (links.length === 0) {
+                        throw new Error('外链文件中没有有效的链接');
+                    }
+
+                    const allItems = document.querySelectorAll('.speed-item');
+                    
+                    allItems.forEach((item, index) => {
+                        const url = links[index % links.length]; 
+                        item.setAttribute('href', url);
+                        item.setAttribute('data-url', url);
+                    });
+
+                    runSpeedTest();
+
+                } catch (error) {
+                    console.error('获取外链文件失败:', error);
+                    
+                    const allItems = document.querySelectorAll('.speed-item');
+                    allItems.forEach(item => {
+                        item.setAttribute('href', 'javascript:void(0)');
+                        item.removeAttribute('data-url');
+                        const rightEl = item.querySelector('.right');
+                        if (rightEl) {
+                            rightEl.textContent = '超时';
+                            rightEl.style.color = '#ef4444';
+                        }
+                    });
+
+                    globalStatus.innerHTML = '<span class="status-dot" style="background:#ef4444"></span> 超时';
+                    globalStatus.style.color = '#ef4444';
+                    globalStatus.style.background = '#fee2e2';
+                    globalStatus.querySelector('.status-dot').style.background = '#ef4444';
+
+                    showToast('⚠️ 微观云登录网站超时，请刷新重试');
+                }
+            }
+
+            // ==========================================
+            // 4. 收藏功能相关
+            // ==========================================
             const collectBtn = document.getElementById('collectBtn');
             const toast = document.getElementById('toast');
             let toastTimer = null;
@@ -483,12 +566,13 @@
                 }
             });
 
-            // 测速相关
+            // ==========================================
+            // 5. 测速相关
+            // ==========================================
             const retestBtn = document.getElementById('retestBtn');
             const globalStatus = document.getElementById('globalStatus');
             const speedListContainer = document.getElementById('speedList');
 
-            // 测速函数：用 Image 对象加载 favicon 来测延迟
             function measureLatency(url, timeout = 5000) {
                 return new Promise((resolve) => {
                     const start = performance.now();
@@ -498,7 +582,7 @@
                     const timer = setTimeout(() => {
                         if (!isResolved) {
                             isResolved = true;
-                            img.src = ''; // 中止请求
+                            img.src = ''; 
                             resolve({ status: 'timeout', latency: Infinity, display: '超时' });
                         }
                     }, timeout);
@@ -521,7 +605,6 @@
                         resolve({ status: 'error', latency, display: latency + 'ms' });
                     };
 
-                    // 添加随机参数防止缓存
                     let baseUrl = url;
                     try {
                         const u = new URL(url);
@@ -534,7 +617,6 @@
                 });
             }
 
-            // 更新全局状态 (根据所有延迟中最差的)
             function updateGlobalStatus(latencies) {
                 const worst = Math.max(...latencies.map(item => item.latency === Infinity ? 99999 : item.latency));
                 const hasTimeout = latencies.some(item => item.status === 'timeout');
@@ -557,7 +639,6 @@
                 }
             }
 
-            // 核心逻辑：测速 -> 更新 UI -> 排序
             async function runSpeedTest() {
                 retestBtn.disabled = true;
                 retestBtn.innerHTML = `
@@ -573,6 +654,18 @@
                 }
 
                 const allItems = Array.from(speedListContainer.querySelectorAll('.speed-item'));
+                
+                const urls = allItems.map(item => item.getAttribute('data-url'));
+                if (urls.some(url => !url || url === 'javascript:void(0)')) {
+                    retestBtn.disabled = false;
+                    retestBtn.innerHTML = `
+                        <svg viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-8 3.58-8 8s3.58 8 8 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                        </svg> 重新测速
+                    `;
+                    return;
+                }
+
                 allItems.forEach(item => {
                     const rightEl = item.querySelector('.right');
                     if (rightEl) {
@@ -585,8 +678,6 @@
                 globalStatus.style.color = '#999';
                 globalStatus.style.background = '#f0f0f0';
                 globalStatus.querySelector('.status-dot').style.background = '#999';
-
-                const urls = allItems.map(item => item.getAttribute('data-url') || 'https://www.wgynav.com');
 
                 try {
                     const results = await Promise.all(urls.map(url => measureLatency(url, 4000)));
@@ -650,15 +741,30 @@
                 }
             }
 
+            // ==========================================
+            // 6. 初始化与事件绑定
+            // ==========================================
             window.addEventListener('DOMContentLoaded', () => {
-                runSpeedTest();
+                loadExternalLinks();
             });
 
-            retestBtn.addEventListener('click', runSpeedTest);
+            retestBtn.addEventListener('click', () => {
+                loadExternalLinks();
+            });
         })();
     </script>
-    
-    <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="e9a922b5-052a-4fd7-b100-51aede982da2";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 
+    <!-- Crisp 客服代码 -->
+    <script type="text/javascript">
+        window.$crisp=[];
+        window.CRISP_WEBSITE_ID="e9a922b5-052a-4fd7-b100-51aede982da2";
+        (function(){
+            d=document;
+            s=d.createElement("script");
+            s.src="https://client.crisp.chat/l.js";
+            s.async=1;
+            d.getElementsByTagName("head")[0].appendChild(s);
+        })();
+    </script>
 </body>
 </html>
