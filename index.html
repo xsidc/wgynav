@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- 新增的 SEO 元标签 -->
+    <!-- SEO 元标签 -->
     <meta name="description" content="微观云导航为用户提供旗下所有网站，避免用户丢失或不记得微观云所搭建的网站!">
     <meta name="keywords" content="微观云,导航,微观云导航,网址导航">
     
@@ -462,9 +462,13 @@
     <script>
         (function() {
             // ==========================================
-            // 1. 外链文件配置
+            // 1. 外链文件配置（三级备份机制）
             // ==========================================
-            const LINKS_FILE_URL = 'https://raw.githubusercontent.com/xsidc/wgynav/main/links.txt';
+            const LINKS_URLS = [
+                'https://raw.githubusercontent.com/xsidc/wgynav/main/links.txt',
+                'https://www.wgybook.com/links.txt',
+                'https://www.wgybook.net/links.txt'
+            ];
 
             // ==========================================
             // 2. 强制刷新与清缓存逻辑
@@ -489,34 +493,37 @@
             });
 
             // ==========================================
-            // 3. 动态读取外链文件获取登录链接
+            // 3. 动态读取外链文件获取登录链接（三级容错）
             // ==========================================
+            async function fetchLinksText(url) {
+                const response = await fetch(url + '?_t=' + Date.now());
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const text = await response.text();
+                const links = text.split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line && !line.startsWith('#'));
+                if (links.length === 0) throw new Error('文件内容为空或格式无效');
+                return links;
+            }
+
             async function loadExternalLinks() {
-                try {
-                    const response = await fetch(LINKS_FILE_URL + '?_t=' + Date.now());
-                    if (!response.ok) throw new Error('网络请求失败');
-                    const text = await response.text();
-                    
-                    const links = text.split('\n')
-                        .map(line => line.trim())
-                        .filter(line => line && !line.startsWith('#'));
+                let links = null;
+                let lastError = null;
 
-                    if (links.length === 0) {
-                        throw new Error('外链文件中没有有效的链接');
+                // 依次尝试三级链接
+                for (const url of LINKS_URLS) {
+                    try {
+                        links = await fetchLinksText(url);
+                        if (links) break; // 成功获取到链接
+                    } catch (err) {
+                        lastError = err;
+                        console.warn(`读取 ${url} 失败:`, err.message);
                     }
+                }
 
-                    const allItems = document.querySelectorAll('.speed-item');
-                    
-                    allItems.forEach((item, index) => {
-                        const url = links[index % links.length]; 
-                        item.setAttribute('href', url);
-                        item.setAttribute('data-url', url);
-                    });
-
-                    runSpeedTest();
-
-                } catch (error) {
-                    console.error('获取外链文件失败:', error);
+                if (!links) {
+                    // 三级全部失败
+                    console.error('所有外链文件均读取失败:', lastError);
                     
                     const allItems = document.querySelectorAll('.speed-item');
                     allItems.forEach(item => {
@@ -535,7 +542,19 @@
                     globalStatus.querySelector('.status-dot').style.background = '#ef4444';
 
                     showToast('⚠️ 微观云登录网站超时，请刷新重试');
+                    return;
                 }
+
+                // 成功读取到链接
+                const allItems = document.querySelectorAll('.speed-item');
+                allItems.forEach((item, index) => {
+                    const url = links[index % links.length]; 
+                    item.setAttribute('href', url);
+                    item.setAttribute('data-url', url);
+                });
+
+                // 开始测速
+                runSpeedTest();
             }
 
             // ==========================================
