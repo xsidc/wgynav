@@ -469,6 +469,8 @@
                 'https://www.wgybook.com/links.txt',
                 'https://www.wgybook.net/links.txt'
             ];
+            const PRIMARY_LABEL = '主线';
+            const FALLBACK_LABEL = '备线';
 
             // ==========================================
             // 2. 强制刷新与清缓存逻辑
@@ -493,7 +495,7 @@
             });
 
             // ==========================================
-            // 3. 动态读取外链文件获取登录链接（三级容错）
+            // 3. 动态读取外链文件获取登录链接（三级容错 + 状态提示）
             // ==========================================
             async function fetchLinksText(url) {
                 const response = await fetch(url + '?_t=' + Date.now());
@@ -509,9 +511,29 @@
             async function loadExternalLinks() {
                 let links = null;
                 let lastError = null;
+                const statusBadge = document.getElementById('globalStatus');
+                const allItems = document.querySelectorAll('.speed-item');
+
+                // 重置所有卡片状态
+                allItems.forEach(item => {
+                    const rightEl = item.querySelector('.right');
+                    if (rightEl) {
+                        rightEl.textContent = '-- ms';
+                        rightEl.style.color = '#ef4444';
+                    }
+                });
 
                 // 依次尝试三级链接
-                for (const url of LINKS_URLS) {
+                for (let i = 0; i < LINKS_URLS.length; i++) {
+                    const url = LINKS_URLS[i];
+                    const label = (i === 0) ? PRIMARY_LABEL : FALLBACK_LABEL;
+                    
+                    // 显示当前正在检测的线路
+                    statusBadge.innerHTML = `<span class="status-dot" style="background:#999"></span> 正在检测${label}`;
+                    statusBadge.style.color = '#999';
+                    statusBadge.style.background = '#f0f0f0';
+                    statusBadge.querySelector('.status-dot').style.background = '#999';
+
                     try {
                         links = await fetchLinksText(url);
                         if (links) break; // 成功获取到链接
@@ -525,7 +547,6 @@
                     // 三级全部失败
                     console.error('所有外链文件均读取失败:', lastError);
                     
-                    const allItems = document.querySelectorAll('.speed-item');
                     allItems.forEach(item => {
                         item.setAttribute('href', 'javascript:void(0)');
                         item.removeAttribute('data-url');
@@ -536,17 +557,16 @@
                         }
                     });
 
-                    globalStatus.innerHTML = '<span class="status-dot" style="background:#ef4444"></span> 超时';
-                    globalStatus.style.color = '#ef4444';
-                    globalStatus.style.background = '#fee2e2';
-                    globalStatus.querySelector('.status-dot').style.background = '#ef4444';
+                    statusBadge.innerHTML = '<span class="status-dot" style="background:#ef4444"></span> 超时';
+                    statusBadge.style.color = '#ef4444';
+                    statusBadge.style.background = '#fee2e2';
+                    statusBadge.querySelector('.status-dot').style.background = '#ef4444';
 
                     showToast('⚠️ 微观云登录网站超时，请刷新重试');
                     return;
                 }
 
                 // 成功读取到链接
-                const allItems = document.querySelectorAll('.speed-item');
                 allItems.forEach((item, index) => {
                     const url = links[index % links.length]; 
                     item.setAttribute('href', url);
